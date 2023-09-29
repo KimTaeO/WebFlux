@@ -1,8 +1,8 @@
 package com.example.webflux.entity
 
-class Dish(
-    private val description: String,
-    private val delivered: Boolean = false
+data class Dish(
+    val description: String,
+    val delivered: Boolean = false
 ) {
     companion object {
         fun deliver(dish: Dish): Dish {
