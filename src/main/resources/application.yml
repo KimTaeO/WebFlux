@@ -1,1 +1,12 @@
-spring.webflux.hiddenmethod.filter.enabled=true
+spring:
+  webflux:
+    hidden-method:
+      filter:
+        enabled: true
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: weblflux
+      uri: mongodb://localhost:27017/webflux
+
