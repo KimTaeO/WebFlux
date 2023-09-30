@@ -4,14 +4,14 @@ import org.springframework.data.annotation.Id;
 
 import java.util.Objects;
 
-class Item {
+public class Item {
     private @Id String id;
     private String name;
     private double price;
 
-    public Item() {}
+    private Item() {}
 
-    Item(String name, double price) {
+    public Item(String name, double price) {
         this.name = name;
         this.price = price;
     }
