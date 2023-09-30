@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id
 
 data class Cart(
     @Id
-    private val id: String,
+    val id: String,
 
-    private val cartItems: List<CartItem> = mutableListOf()
+    val cartItems: List<CartItem> = mutableListOf()
 )

@@ -5,9 +5,9 @@ import org.springframework.data.annotation.Id
 
 data class Item(
     @Id
-    private val id: String,
+    val id: String = "",
 
-    private val name: String,
+    val name: String,
 
-    private val price: Double
+    val price: Double
 )
