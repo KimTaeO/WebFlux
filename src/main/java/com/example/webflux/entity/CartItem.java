@@ -2,10 +2,13 @@ package com.example.webflux.entity;
 
 import java.util.Objects;
 
-class CartItem {
+public class CartItem {
     private Item item;
     private int quantity;
 
+    public void increment() {
+        this.quantity += 1;
+    }
     public CartItem(Item item) {
         this.item = item;
         this.quantity = 1;
