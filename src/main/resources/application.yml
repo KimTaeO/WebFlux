@@ -4,3 +4,19 @@ spring:
       host: localhost
       port: 27017
       database: webflux
+
+
+  devtools:
+    #정적 자원 제외
+    restart:
+      additional-exclude: static/**,public/**
+    # 속성 기본값 적용여부
+    add-properties: true
+
+  # 타임리프 캐시 비활성화
+  thymeleaf:
+    cache: false
+
+logging:
+  level:
+    web: DEBUG
