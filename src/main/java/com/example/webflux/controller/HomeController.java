@@ -1,7 +1,6 @@
 package com.example.webflux.controller;
 
 import com.example.webflux.entity.Cart;
-import com.example.webflux.entity.CartItem;
 import com.example.webflux.repository.CartRepository;
 import com.example.webflux.repository.ItemRepository;
 import com.example.webflux.service.CartService;
@@ -28,7 +27,7 @@ public class HomeController {
     Mono<Rendering> home() {
         return Mono.just(Rendering.view("home")
                 .modelAttribute("items",
-                        itemRepository.findAll())
+                        itemRepository.findAll().doOnNext(System.out::println))
                 .modelAttribute("cart",
                         cartRepository.findById("My Cart")
                                 .defaultIfEmpty(new Cart("My Cart")))
