@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.16'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
 group = 'com.example'
@@ -24,6 +25,39 @@ dependencies {
     testImplementation 'io.projectreactor:reactor-test'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'io.projectreactor.tools:blockhound:1.0.8.RELEASE'
+    implementation 'org.projectlombok:lombok:1.18.22'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-webtestclient'
+}
+
+ext {
+    snippetsDir = file('./build/generated-snippets')
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    // 다른 Task 에 의존한다는 것을 알리는 것이다.
+    // test Task 에 의존함을 알린다.
+    // asciidoctor task 를 실행할 때, test task 를 먼저 실행한다.
+    dependsOn test
+}
+
+test {
+    useJUnitPlatform()
+    outputs.dir snippetsDir
+}
+
+asciidoctor.doFirst {
+    delete file('src/main/resources/static/docs')
+}
+
+tasks.register('copyDocument', Copy) {
+    dependsOn asciidoctor
+    from file("build/docs/asciidoc")
+    into file("src/main/resources/static/docs")
+}
+
+build {
+    dependsOn copyDocument
 }
 
 tasks.named('test') {
