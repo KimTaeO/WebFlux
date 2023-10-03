@@ -5,6 +5,7 @@ import com.example.webflux.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
@@ -13,6 +14,11 @@ import java.net.URI;
 @RequiredArgsConstructor
 public class ApiItemController {
     private final ItemRepository itemRepository;
+
+    @GetMapping("/api/items")
+    Flux<Item> findAll() {
+        return itemRepository.findAll();
+    }
 
     @GetMapping("/api/items/{id}")
     Mono<Item> findOne(@PathVariable String id) {
@@ -27,7 +33,8 @@ public class ApiItemController {
                                 URI.create("api/items/" +
                                 savedItem.getId())
                         )
-                        .body(savedItem));
+                        .body(savedItem))
+                ;
     }
 
     @PutMapping("/api/items/{id}")
@@ -40,7 +47,7 @@ public class ApiItemController {
                 .name(content.getName())
                 .description(content.getDescription())
                 .build())
-                .flatMap(itemRepository::save)
+                .flatMap(this.itemRepository::save)
                 .map(ResponseEntity::ok);
     }
 }

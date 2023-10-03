@@ -16,16 +16,13 @@ public class Item {
     private @Id String id;
     private String name;
     private String description;
-
-
-
-
     private double price;
     private String distributorRegion;
     private Date releaseDate;
     private Integer availableUnits;
     private Point location;
     private boolean active;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
