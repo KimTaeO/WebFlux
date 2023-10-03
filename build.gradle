@@ -5,6 +5,10 @@ plugins {
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
+configurations {
+    asciidoctorExt // (2)
+}
+
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
@@ -25,7 +29,8 @@ dependencies {
     testImplementation 'io.projectreactor:reactor-test'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
     implementation 'io.projectreactor.tools:blockhound:1.0.8.RELEASE'
-    implementation 'org.projectlombok:lombok:1.18.22'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.restdocs:spring-restdocs-webtestclient'
 }
 
@@ -38,6 +43,7 @@ asciidoctor {
     // 다른 Task 에 의존한다는 것을 알리는 것이다.
     // test Task 에 의존함을 알린다.
     // asciidoctor task 를 실행할 때, test task 를 먼저 실행한다.
+    configurations 'asciidoctorExt'
     dependsOn test
 }
 
