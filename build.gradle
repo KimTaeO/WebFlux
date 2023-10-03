@@ -32,10 +32,11 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.restdocs:spring-restdocs-webtestclient'
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 }
 
 ext {
-    snippetsDir = file('./build/generated-snippets')
+    snippetsDir = file('build/generated-snippets')
 }
 
 asciidoctor {
@@ -66,6 +67,9 @@ build {
     dependsOn copyDocument
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+bootJar {
+    dependsOn asciidoctor // (1)
+    from("${asciidoctor.outputDir}") { // (2)
+        into 'static/docs'
+    }
 }
