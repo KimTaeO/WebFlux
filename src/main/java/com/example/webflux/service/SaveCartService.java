@@ -13,7 +13,13 @@ public class SaveCartService {
     }
 
     public void saveItem() {
-        repository.save(new Item("Alf alarm clock", 19.99));
-        repository.save(new Item("Smurf TV tray", 24.99));
+        repository.save(Item.builder()
+                .name("Alf alarm clock")
+                .price(19.99)
+                .build());
+        repository.save(Item.builder()
+                .name("Smurf TV tray")
+                .price(24.99)
+                .build());
     }
 }
