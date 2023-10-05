@@ -48,4 +48,13 @@ public class HypermediaItemControllerDocumentationTest {
                                 linkWithRel("item").description("`Item` 목록 링크")
                         )));
     }
+
+    @Test
+    void profile() {
+        webTestClient.get().uri("/hypermedia/items/profile")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .consumeWith(document("profile-alps", preprocessResponse(prettyPrint())));
+    }
 }
