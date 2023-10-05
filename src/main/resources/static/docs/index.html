@@ -446,6 +446,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 <div id="content">
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>다음 요청을 실행하면:</p>
 </div>
@@ -484,10 +486,110 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>동일한 응답 본문이 반환됩니다. curl과 HTTPie 중 좋아하는 것을 사용하시면 됩니다.</p>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_상품">상품</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_한_건_조회">한 건 조회</h3>
+<div class="sect3">
+<h4 id="_요청">요청</h4>
+<div class="sect4">
+<h5 id="_http">http</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /hypermedia/items/item-1 HTTP/1.1
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_curl">curl</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/hypermedia/items/item-1' -i -X GET</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_httpie">HTTPie</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">$ http GET 'http://localhost:8080/hypermedia/items/item-1'</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_응답">응답</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 382
+
+{
+  "id" : "item-1",
+  "name" : "Alf alarm clock",
+  "description" : "nothing I really need",
+  "price" : 19.99,
+  "distributorRegion" : null,
+  "releaseDate" : null,
+  "availableUnits" : null,
+  "location" : null,
+  "active" : false,
+  "links" : [ {
+    "rel" : "self",
+    "href" : "/hypermedia/items/item-1"
+  }, {
+    "rel" : "item",
+    "href" : "/hypermedia/api/items"
+  } ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_응답_본문">응답 본문</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code></code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_링크">링크</h5>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Relation</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>self</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">이 `Item`에 대한 공식 링크</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>item</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Item</code> 목록 링크</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-10-04 07:56:00 +0900
+Last updated 2023-10-05 14:12:13 +0900
 </div>
 </div>
 </body>
