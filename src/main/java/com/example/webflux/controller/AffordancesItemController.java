@@ -2,6 +2,7 @@ package com.example.webflux.controller;
 
 import com.example.webflux.entity.Item;
 import com.example.webflux.repository.ItemRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +15,9 @@ import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.lin
 import static org.springframework.hateoas.server.reactive.WebFluxLinkBuilder.methodOn;
 
 @RestController
+@RequiredArgsConstructor
 public class AffordancesItemController {
-    private ItemRepository repository;
+    private final ItemRepository repository;
 
 
     @PutMapping("/affordances/items/{id}")
@@ -42,7 +44,7 @@ public class AffordancesItemController {
 
         Mono<Link> selfLink = linkTo(controller.findOne(id))
                 .withSelfRel()
-                .andAffordance(controller.updateItem(null, id))
+                .andAffordance(controller.updateItem(Mono.just(EntityModel.of(Item.builder().build())), id))
                 .toMono();
 
         Mono<Link> aggregateLink = linkTo(controller.findAll())
@@ -53,7 +55,7 @@ public class AffordancesItemController {
                 .map(o -> EntityModel.of(o.getT1(), Links.of(o.getT2(), o.getT3())));
     }
 
-    @GetMapping("/affordances/api/items")
+    @GetMapping("/affordances/items")
     Mono<CollectionModel<EntityModel<Item>>> findAll() {
         AffordancesItemController controller = methodOn(AffordancesItemController.class);
 
@@ -65,9 +67,9 @@ public class AffordancesItemController {
         return repository.findAll()
                 .flatMap(item -> findOne(item.getId()))
                 .collectList()
-                .flatMap(modles -> aggregateRoot
+                .flatMap(models -> aggregateRoot
                         .map(selfLink -> CollectionModel.of(
-                                modles, selfLink
+                                models, selfLink
                         )));
     }
 
