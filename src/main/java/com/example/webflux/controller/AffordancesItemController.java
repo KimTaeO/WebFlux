@@ -71,7 +71,7 @@ public class AffordancesItemController {
                         )));
     }
 
-    @PostMapping("/affordanes/items")
+    @PostMapping("/affordances/items")
     Mono<ResponseEntity<?>> addNewItem(@RequestBody Mono<EntityModel<Item>> item) {
         return item
                 .map(EntityModel::getContent)
