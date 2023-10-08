@@ -2,12 +2,8 @@ package com.example.webflux.controller;
 
 import com.example.webflux.entity.Item;
 import com.example.webflux.repository.ItemRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
@@ -16,6 +12,11 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
+
+import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;
 
 @WebFluxTest(AffordancesItemController.class)
 @AutoConfigureRestDocs
@@ -26,8 +27,9 @@ public class AffordancesItemControllerDocumentationTest {
     @MockBean
     ItemRepository itemRepository;
 
+    ObjectMapper mapper = new ObjectMapper();
     @Test
-    void findSingleItemAffordances() {
+    public void findSingleItemAffordances() {
         Item item = Item.builder()
                 .id("item-1")
                 .name("Alf alarm clock")
@@ -49,7 +51,7 @@ public class AffordancesItemControllerDocumentationTest {
     }
 
     @Test
-    void addNewItemAffordances() {
+    public void addNewItemAffordances() {
         Item item = Item.builder()
                 .id("item-1")
                 .name("Alf alarm clock")
@@ -60,7 +62,8 @@ public class AffordancesItemControllerDocumentationTest {
         when(itemRepository.findById("item-1")).thenReturn(Mono.just(item));
 
         webTestClient.post().uri("/affordances/items")
-                .accept(MediaTypes.HAL_FORMS_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .bodyValue(item)
                 .exchange()
                 .expectStatus().isCreated()
                 .expectBody()
